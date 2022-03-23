@@ -91,7 +91,6 @@ function Characters() {
         }}
       >
         {/* =====FORM */}
-
         <FormControl
           sx={{
             bgcolor: "#dcdcdc",
@@ -138,9 +137,7 @@ function Characters() {
             Find
           </Button>
         </FormControl>
-
         {/* =====CARD */}
-
         {!!char && (
           <Card
             key={char}
@@ -184,9 +181,8 @@ function Characters() {
             </CardContent>
           </Card>
         )}
-
         {/* =====TABLE */}
-        <DenseTable charByName={charByName} />
+        {!!charByName && <DenseTable charByName={charByName} />}{" "}
       </Box>
     </Container>
   );
