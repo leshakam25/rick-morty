@@ -1,24 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container } from "@mui/material";
+import "./App.css";
+import Home from "./components/home";
+import ResponsiveAppBar from "./components/appBar";
+import { Route, Routes } from "react-router-dom";
+import Characters from "./components/pages/characters/characters";
+import Location from "./components/pages/location/location";
+import Episode from "./components/pages/episode/episode";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxWidth="fluid">
+      <ResponsiveAppBar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/character" element={<Characters />} />
+        <Route path="/location" element={<Location />} />
+        <Route path="/episode" element={<Episode />} />
+      </Routes>
+    </Container>
   );
 }
 
