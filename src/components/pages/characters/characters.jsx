@@ -11,9 +11,12 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import s from "./characters.module.css";
+import DenseTable from "./table";
 
 function Characters() {
   const [char, setChar] = useState();
+  const [charByName, setCharByName] = useState();
+
   const [findId, setFindId] = useState();
   const [findName, setFindName] = useState();
 
@@ -44,20 +47,24 @@ function Characters() {
 
   const handleFindByName = async () => {
     const urlName = url + "?name=" + findName;
-    console.log("urlName", urlName);
     let response = await fetch(urlName);
     const result = await response.json();
-    setChar(result);
+    setCharByName(result);
+    console.log("result", result);
   };
 
   // =====GROUP SUBMIT
 
-  const handleFind = () => {
-    if (findId.length > 0) {
-      handleFindById();
+  const handleFind = (props) => {
+    if (findId) {
+      if (findId.length > 0) {
+        handleFindById();
+      }
     }
-    if (findName.length > 0) {
-      handleFindByName();
+    if (findName) {
+      if (findName.length > 0) {
+        handleFindByName();
+      }
     } else {
       console.log("pusto");
     }
@@ -69,6 +76,7 @@ function Characters() {
     console.log("char", char);
     console.log("id", findId);
     console.log("name", findName);
+    console.log("charByName", charByName);
   };
 
   return (
@@ -79,7 +87,7 @@ function Characters() {
           padding: "16px 0",
           flexDirection: "row",
           flexWrap: "wrap",
-          minHeight: "77vh",
+          height: "100%",
         }}
       >
         {/* =====FORM */}
@@ -88,8 +96,9 @@ function Characters() {
           sx={{
             bgcolor: "#dcdcdc",
             height: "228px",
-            mr: "20px",
-            p: "20px",
+            mr: 2,
+            p: 2,
+            mb: 2,
             borderRadius: 2,
           }}
         >
@@ -137,14 +146,13 @@ function Characters() {
             key={char}
             sx={{
               bgcolor: "#dcdcdc",
-              boxShadow: "none",
-              width: 310,
-              height: 600,
+              width: 250,
+              height: 380,
               borderRadius: 2,
-              padding: "20px 10px 0 20px",
+              padding: "16px 16px 0 16px",
             }}
           >
-            <Typography variant="h3">
+            <Typography variant="h5">
               {!!char && !!char.name && char.name}
             </Typography>
             {!!char && !!char.image && (
@@ -153,32 +161,32 @@ function Characters() {
                 alt="no img"
                 height="auto"
                 image={char.image}
-                sx={{ width: "300px", borderRadius: 2 }}
+                sx={{ height: "150px", borderRadius: 2 }}
               />
             )}
             <CardContent>
               <Typography variant="body1" color="text.secondary">
-                Alive or not: {!!char && !!char.status && char.status}
+                Alive or not: {char.status}
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Created: {!!char && !!char.created && char.created}
+                Created: {char.created}
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Gender: {!!char && !!char.gender && char.gender}
+                Gender: {char.gender}
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Race: {!!char && !!char.species && char.species}
+                Race: {char.species}
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 Location:
-                {!!char &&
-                  !!char.location &&
-                  !!char.location.name &&
-                  char.location.name}
+                {char.location.name}
               </Typography>
             </CardContent>
           </Card>
         )}
+
+        {/* =====TABLE */}
+        <DenseTable charByName={charByName} />
       </Box>
     </Container>
   );
