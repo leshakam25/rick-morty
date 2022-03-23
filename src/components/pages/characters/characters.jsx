@@ -72,7 +72,7 @@ function Characters() {
   };
 
   return (
-    <Container sx={{ bgcolor: "#57CC99" }} maxWidth="xl">
+    <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
       <Box
         sx={{
           display: "flex",
@@ -80,18 +80,17 @@ function Characters() {
           flexDirection: "row",
           flexWrap: "wrap",
           minHeight: "77vh",
-          borderRadius: "20px",
         }}
       >
         {/* =====FORM */}
 
         <FormControl
           sx={{
-            bgcolor: "#ffffff",
+            bgcolor: "#dcdcdc",
             height: "228px",
             mr: "20px",
             p: "20px",
-            borderRadius: "10px",
+            borderRadius: 2,
           }}
         >
           <Button
@@ -137,9 +136,11 @@ function Characters() {
           <Card
             key={char}
             sx={{
+              bgcolor: "#dcdcdc",
+              boxShadow: "none",
               width: 310,
-              minHeight: 400,
-              borderRadius: "10px",
+              height: 600,
+              borderRadius: 2,
               padding: "20px 10px 0 20px",
             }}
           >
@@ -152,7 +153,7 @@ function Characters() {
                 alt="no img"
                 height="auto"
                 image={char.image}
-                sx={{ width: "300px" }}
+                sx={{ width: "300px", borderRadius: 2 }}
               />
             )}
             <CardContent>
@@ -160,7 +161,7 @@ function Characters() {
                 Alive or not: {!!char && !!char.status && char.status}
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                Character created: {!!char && !!char.created && char.created}
+                Created: {!!char && !!char.created && char.created}
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 Gender: {!!char && !!char.gender && char.gender}
