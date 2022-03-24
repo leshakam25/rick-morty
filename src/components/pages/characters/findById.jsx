@@ -1,3 +1,4 @@
+import s from "./characters.module.css";
 import {
   TextField,
   FormControl,
@@ -10,7 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import { useState } from "react";
-import s from "./characters.module.css";
+import { Link } from "react-router-dom";
 
 export default function FindById(props) {
   const [charById, setCharById] = useState();
@@ -38,24 +39,46 @@ export default function FindById(props) {
 
   return (
     <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
-      <Box
-        sx={{
-          display: "flex",
-          padding: "16px 0",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          height: "100%",
-        }}
-      >
-        {/* =====FORM */}
+      {/* =====FORM */}
+      <Box>
+        <Link to="/findbyid">
+          <Button
+            sx={{
+              m: 2,
+              color: "#C7F9CC",
+              bgcolor: "#38A3A5",
+            }}
+            color="secondary"
+            variant="contained"
+            size="large"
+          >
+            Find Id
+          </Button>
+        </Link>
+        <Link to="/findbyname">
+          <Button
+            sx={{
+              m: "2px 2px 2px 0",
+              color: "#C7F9CC",
+              bgcolor: "#38A3A5",
+            }}
+            color="secondary"
+            variant="contained"
+            size="large"
+          >
+            Find Name
+          </Button>
+        </Link>
+      </Box>
+      <Box sx={{ display: "flex", flexDirection: "row" }}>
         <FormControl
           sx={{
             bgcolor: "#dcdcdc",
-            height: "228px",
-            mr: 2,
-            p: 2,
-            mb: 2,
             borderRadius: 2,
+            p: 2,
+            m: 2,
+            height: 170,
+            width: 180,
           }}
         >
           <Button
@@ -77,7 +100,7 @@ export default function FindById(props) {
             sx={{ mb: "20px" }}
           />
           <Button
-            sx={{ mb: "20px" }}
+            sx={{}}
             onClick={handleFindById}
             variant="contained"
             size="large"
@@ -90,11 +113,13 @@ export default function FindById(props) {
           <Card
             key={charById}
             sx={{
+              m: 2,
               bgcolor: "#dcdcdc",
-              width: 250,
-              height: 380,
+              width: 280,
+              minHeight: 380,
               borderRadius: 2,
               padding: "16px 16px 0 16px",
+              boxShadow: "none",
             }}
           >
             <Typography variant="h5">
@@ -106,7 +131,7 @@ export default function FindById(props) {
                 alt="no img"
                 height="auto"
                 image={charById.image}
-                sx={{ height: "150px", borderRadius: 2 }}
+                sx={{ height: "350px", borderRadius: 2 }}
               />
             )}
             <CardContent>

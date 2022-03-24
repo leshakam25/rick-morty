@@ -1,23 +1,40 @@
-import { Button, Container } from "@mui/material";
-import FindByName from "./findByName";
-import FindById from "./findById";
 import s from "./characters.module.css";
-
+import { Button, Container, Box } from "@mui/material";
 import { Link } from "react-router-dom";
 
 function Characters() {
   return (
-    <Container maxWidth="xl">
-      <Link to="findById">
-        <Button sx={{ m: 1 }} variant="contained">
-          FindById
-        </Button>
-      </Link>
-      <Link to="findByName">
-        <Button sx={{ m: 1 }} variant="contained">
-          FindByName
-        </Button>
-      </Link>
+    <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
+      <Box>
+        <Link to="/findbyid">
+          <Button
+            sx={{
+              m: 1,
+              color: "#C7F9CC",
+              bgcolor: "#38A3A5",
+              m: 2,
+            }}
+            variant="contained"
+            size="large"
+          >
+            Find Id
+          </Button>
+        </Link>
+        <Link to="/findbyname">
+          <Button
+            sx={{
+              m: 1,
+              color: "#C7F9CC",
+              bgcolor: "#38A3A5",
+              m: 2,
+            }}
+            variant="contained"
+            size="large"
+          >
+            Find Name
+          </Button>
+        </Link>
+      </Box>
     </Container>
   );
 }
