@@ -24,12 +24,12 @@ export default function FindById(props) {
   };
 
   const handleFindById = async () => {
-    if (changeId.length > 0) {
+    if (changeId.length > 0 && changeId <= 826) {
       const urlId = url + changeId;
       let response = await fetch(urlId);
       const result = await response.json();
       setCharById(result);
-    }
+    } else alert("Invalid data");
   };
 
   const log = () => {

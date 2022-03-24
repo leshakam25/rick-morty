@@ -34,9 +34,14 @@ export default function FindByName() {
 
   const [charByName, setCharByName] = useState();
   const [nameChange, setNameChange] = useState();
+  const [data, setData] = useState();
 
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+
+  const handleOpen = (event) => {
+    setOpen(true);
+    setData(event.currentTarget.id);
+  };
   const handleClose = () => setOpen(false);
 
   const url = `https://rickandmortyapi.com/api/character/`;
@@ -154,15 +159,16 @@ export default function FindByName() {
                 <TableCell sx={{ fontSize: "24px" }} align="left">
                   Location
                 </TableCell>
-                <TableCell sx={{ fontSize: "24px" }} align="left">
-                  Status
-                </TableCell>
               </TableRow>
             </TableHead>
             {!!charByName &&
               charByName.results.map((row) => (
                 <TableBody key={row.id}>
-                  <TableRow onClick={handleOpen} className={s.hover}>
+                  <TableRow
+                    id={row.id}
+                    onClick={handleOpen}
+                    className={s.hover}
+                  >
                     <TableCell align="center">
                       <CardMedia
                         align="left"
@@ -181,13 +187,76 @@ export default function FindByName() {
                     <TableCell sx={{ fontSize: "22px" }} align="left">
                       {row.location.name}
                     </TableCell>
-                    <TableCell sx={{ fontSize: "22px" }} align="left">
-                      {row.status}
-                    </TableCell>
                   </TableRow>
                 </TableBody>
               ))}
           </Table>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              {!!charByName &&
+                !!charByName.results &&
+                charByName.results.map((element) => {
+                  if (element.id === +data) {
+                    return (
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "row",
+                          wrap: "wrap",
+                        }}
+                      >
+                        <CardMedia
+                          align="left"
+                          component="img"
+                          alt="no img"
+                          image={element.image}
+                          sx={{
+                            height: "100%",
+                            width: "auto",
+                            borderRadius: 1,
+                          }}
+                        />
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "space-around",
+                            alignItems: "left",
+                            wrap: "wrap",
+                            m: 2,
+                          }}
+                        >
+                          <Typography variant="h4">
+                            Name: {element.name}
+                          </Typography>
+                          <Typography variant="body1">
+                            Gender: {element.gender}
+                          </Typography>
+                          <Typography variant="body1">
+                            Alive or not: {element.status}
+                          </Typography>
+                          <Typography variant="body1">
+                            Location:
+                            {element.location.name}
+                          </Typography>
+                          <Typography variant="body2">
+                            {element.created}
+                          </Typography>
+                          <Typography variant="body2">
+                            Episode: {element.episode[0]}
+                          </Typography>
+                        </Box>
+                      </Box>
+                    );
+                  }
+                })}
+            </Box>
+          </Modal>
           <Box sx={{ m: 2 }}>
             <Button onClick={prevPage} variant="text" size="large">
               Prev
@@ -201,14 +270,6 @@ export default function FindByName() {
               Next
             </Button>
           </Box>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}></Box>
-          </Modal>
         </TableContainer>
       </Box>
     </Container>
