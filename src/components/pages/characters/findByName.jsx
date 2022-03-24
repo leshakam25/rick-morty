@@ -11,16 +11,33 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
   Paper,
   Box,
   CardMedia,
+  Modal,
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function FindByName() {
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+  };
+
   const [charByName, setCharByName] = useState();
   const [nameChange, setNameChange] = useState();
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const url = `https://rickandmortyapi.com/api/character/`;
 
@@ -47,6 +64,7 @@ export default function FindByName() {
   return (
     <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
       <Box>
+        {/* ======PAGES */}
         <Link to="/findbyid">
           <Button
             sx={{
@@ -77,7 +95,7 @@ export default function FindByName() {
         </Link>
       </Box>
       {/* =====FORM */}
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
         <FormControl
           sx={{
             bgcolor: "#dcdcdc",
@@ -85,7 +103,7 @@ export default function FindByName() {
             p: 2,
             m: 2,
             height: 170,
-            width: 180,
+            width: 215,
           }}
         >
           <Button
@@ -117,7 +135,7 @@ export default function FindByName() {
         </FormControl>
         {/* =====TABLE */}
         <TableContainer
-          sx={{ m: 2, boxShadow: "none", bgcolor: "#dcdcdc", maxWidth: 1200 }}
+          sx={{ m: 2, boxShadow: "none", bgcolor: "#dcdcdc", maxWidth: 1170 }}
           align="center"
           component={Paper}
         >
@@ -143,8 +161,8 @@ export default function FindByName() {
             </TableHead>
             {!!charByName &&
               charByName.results.map((row) => (
-                <TableBody>
-                  <TableRow className={s.hover} key={row.id}>
+                <TableBody key={row.id}>
+                  <TableRow onClick={handleOpen} className={s.hover}>
                     <TableCell align="center">
                       <CardMedia
                         align="left"
@@ -183,6 +201,14 @@ export default function FindByName() {
               Next
             </Button>
           </Box>
+          <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}></Box>
+          </Modal>
         </TableContainer>
       </Box>
     </Container>

@@ -16,6 +16,7 @@ function Characters() {
             }}
             variant="contained"
             size="large"
+            color="secondary"
           >
             Find Id
           </Button>
@@ -23,13 +24,13 @@ function Characters() {
         <Link to="/findbyname">
           <Button
             sx={{
-              m: 1,
               color: "#C7F9CC",
               bgcolor: "#38A3A5",
-              m: 2,
+              m: "2px 2px 2px 0",
             }}
             variant="contained"
             size="large"
+            color="secondary"
           >
             Find Name
           </Button>

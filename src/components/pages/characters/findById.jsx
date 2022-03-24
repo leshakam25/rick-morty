@@ -78,7 +78,7 @@ export default function FindById(props) {
             p: 2,
             m: 2,
             height: 170,
-            width: 180,
+            width: 215,
           }}
         >
           <Button
