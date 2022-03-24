@@ -6,6 +6,8 @@ import { Route, Routes } from "react-router-dom";
 import Characters from "./components/pages/characters/characters";
 import Location from "./components/pages/location/location";
 import Episode from "./components/pages/episode/episode";
+import FindByName from "./components/pages/characters/findByName";
+import FindById from "./components/pages/characters/findById";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/character" element={<Characters />} />
         <Route path="/location" element={<Location />} />
         <Route path="/episode" element={<Episode />} />
+        <Route path="/findbyid" element={<FindById />} />
+        <Route path="/findbyname" element={<FindByName />} />
       </Routes>
     </Container>
   );
