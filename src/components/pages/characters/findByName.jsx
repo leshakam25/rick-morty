@@ -17,6 +17,8 @@ import {
   CardMedia,
   Modal,
 } from "@mui/material";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -258,16 +260,22 @@ export default function FindByName() {
             </Box>
           </Modal>
           <Box sx={{ m: 2 }}>
-            <Button onClick={prevPage} variant="text" size="large">
-              Prev
+            <Button
+              color="secondary"
+              onClick={prevPage}
+              variant="text"
+              size="large"
+            >
+              <ArrowBackRoundedIcon />
             </Button>
             <Button
               onClick={nextPage}
               sx={{ pl: 2 }}
+              color="secondary"
               variant="text"
               size="large"
             >
-              Next
+              <ArrowForwardRoundedIcon />
             </Button>
           </Box>
         </TableContainer>
