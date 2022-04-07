@@ -4,6 +4,7 @@ import {
   TextField,
   FormControl,
   Button,
+  ButtonGroup,
   Container,
   Table,
   TableBody,
@@ -27,6 +28,8 @@ export default function FindByName() {
     position: "absolute",
     top: "50%",
     left: "50%",
+    width: "90vw",
+    height: "80vh",
     transform: "translate(-50%, -50%)",
     bgcolor: "background.paper",
     boxShadow: 24,
@@ -34,9 +37,9 @@ export default function FindByName() {
     borderRadius: 2,
   };
 
-  const [charByName, setCharByName] = useState();
-  const [nameChange, setNameChange] = useState();
-  const [data, setData] = useState();
+  const [charByName, setCharByName] = useState({});
+  const [nameChange, setNameChange] = useState("");
+  const [data, setData] = useState(null);
 
   const [open, setOpen] = React.useState(false);
 
@@ -59,9 +62,17 @@ export default function FindByName() {
     setCharByName(result);
   };
 
-  const nextPage = () => {};
+  const nextPage = async () => {
+    let response = await fetch(charByName.info.next);
+    const result = await response.json();
+    setCharByName(result);
+  };
 
-  const prevPage = () => {};
+  const prevPage = async () => {
+    let response = await fetch(charByName.info.prev);
+    const result = await response.json();
+    setCharByName(result);
+  };
 
   const log = () => {
     console.log(charByName);
@@ -69,9 +80,15 @@ export default function FindByName() {
   };
 
   return (
-    <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
-      <Box>
-        {/* ======PAGES */}
+    <Container
+      sx={{
+        borderRadius: 2,
+        bgcolor: "#57CC99",
+      }}
+      maxWidth="xl"
+    >
+      {/* ======PAGES */}
+      <Box sx={{}}>
         <Link to="/findbyid">
           <Button
             sx={{
@@ -101,27 +118,20 @@ export default function FindByName() {
           </Button>
         </Link>
       </Box>
-      {/* =====FORM */}
-      <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}>
+      {/* ====RESULTS */}
+      <Box sx={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
+        {/* =====FORM */}
+
         <FormControl
           sx={{
             bgcolor: "#dcdcdc",
             borderRadius: 2,
             p: 2,
             m: 2,
-            height: 170,
-            width: 215,
+            height: "auto",
+            width: "95%",
           }}
         >
-          <Button
-            variant="contained"
-            size="large"
-            color="warning"
-            onClick={log}
-            sx={{ mb: "20px" }}
-          >
-            log
-          </Button>
           <TextField
             onChange={handleChangeName}
             value={nameChange}
@@ -131,47 +141,53 @@ export default function FindByName() {
             variant="outlined"
             sx={{ mb: "20px" }}
           />
-          <Button
-            sx={{}}
-            onClick={handleFindByName}
-            variant="contained"
-            size="large"
-          >
-            Find
-          </Button>
+          <ButtonGroup>
+            <Button onClick={handleFindByName} variant="contained" size="large">
+              Find
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              color="warning"
+              onClick={log}
+            >
+              log
+            </Button>
+          </ButtonGroup>
         </FormControl>
         {/* =====TABLE */}
         <TableContainer
-          sx={{ m: 2, boxShadow: "none", bgcolor: "#dcdcdc", maxWidth: 1170 }}
+          sx={{ m: 2, boxShadow: "none", bgcolor: "#dcdcdc", maxWidth: "97%" }}
           align="center"
           component={Paper}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell sx={{ fontSize: "24px" }} align="left">
-                  Image
-                </TableCell>
-                <TableCell sx={{ fontSize: "24px" }} align="left">
-                  Name
-                </TableCell>
-                <TableCell sx={{ fontSize: "24px" }} align="left">
-                  Race
-                </TableCell>
-                <TableCell sx={{ fontSize: "24px" }} align="left">
-                  Location
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            {!!charByName &&
-              charByName.results.map((row) => (
-                <TableBody key={row.id}>
+          <Table
+            sx={{
+              minWidth: 650,
+              display: "flex",
+              flexDirection: "row",
+            }}
+            aria-label="simple table"
+          >
+            <TableBody
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                alignItems: "center",
+              }}
+            >
+              {!!charByName &&
+                charByName.results &&
+                charByName.results.map((row) => (
                   <TableRow
+                    key={row.id}
                     id={row.id}
                     onClick={handleOpen}
                     className={s.hover}
+                    sx={{ width: "17vw" }}
                   >
-                    <TableCell align="center">
+                    <TableCell align="left">
                       <CardMedia
                         align="left"
                         component="img"
@@ -183,15 +199,9 @@ export default function FindByName() {
                     <TableCell sx={{ fontSize: "22px" }} align="left">
                       {row.name}
                     </TableCell>
-                    <TableCell sx={{ fontSize: "22px" }} align="left">
-                      {row.species}
-                    </TableCell>
-                    <TableCell sx={{ fontSize: "22px" }} align="left">
-                      {row.location.name}
-                    </TableCell>
                   </TableRow>
-                </TableBody>
-              ))}
+                ))}
+            </TableBody>
           </Table>
           <Modal
             open={open}
@@ -209,7 +219,7 @@ export default function FindByName() {
                         sx={{
                           display: "flex",
                           flexDirection: "row",
-                          wrap: "wrap",
+                          flexWrap: "wrap",
                         }}
                       >
                         <CardMedia
@@ -218,7 +228,7 @@ export default function FindByName() {
                           alt="no img"
                           image={element.image}
                           sx={{
-                            height: "100%",
+                            height: "50vh",
                             width: "auto",
                             borderRadius: 1,
                           }}
@@ -231,27 +241,29 @@ export default function FindByName() {
                             alignItems: "left",
                             wrap: "wrap",
                             m: 2,
+                            fontSize: "32px",
                           }}
                         >
-                          <Typography variant="h4">
+                          <Typography variant="h2">
                             Name: {element.name}
                           </Typography>
-                          <Typography variant="body1">
+                          <Typography variant="h3">
                             Gender: {element.gender}
                           </Typography>
-                          <Typography variant="body1">
+                          <Typography variant="h3">
                             Alive or not: {element.status}
                           </Typography>
-                          <Typography variant="body1">
+                          <Typography variant="h3">
                             Location:
                             {element.location.name}
                           </Typography>
-                          <Typography variant="body2">
+                          <Typography variant="h3">
                             {element.created}
                           </Typography>
-                          <Typography variant="body2">
+                          <Typography variant="h3">
                             Episode: {element.episode[0]}
                           </Typography>
+                          <Typography variant="h3">ID: {element.id}</Typography>
                         </Box>
                       </Box>
                     );
@@ -259,25 +271,29 @@ export default function FindByName() {
                 })}
             </Box>
           </Modal>
-          <Box sx={{ m: 2 }}>
-            <Button
-              color="secondary"
-              onClick={prevPage}
-              variant="text"
-              size="large"
-            >
-              <ArrowBackRoundedIcon />
-            </Button>
-            <Button
-              onClick={nextPage}
-              sx={{ pl: 2 }}
-              color="secondary"
-              variant="text"
-              size="large"
-            >
-              <ArrowForwardRoundedIcon />
-            </Button>
-          </Box>
+          {!!charByName && (
+            <Box sx={{ m: 2 }}>
+              <ButtonGroup>
+                <Button
+                  color="secondary"
+                  onClick={prevPage}
+                  variant="outlined"
+                  size="large"
+                >
+                  <ArrowBackRoundedIcon />
+                </Button>
+                <Button
+                  onClick={nextPage}
+                  sx={{ pl: 2 }}
+                  color="secondary"
+                  variant="outlined"
+                  size="large"
+                >
+                  <ArrowForwardRoundedIcon />
+                </Button>
+              </ButtonGroup>
+            </Box>
+          )}
         </TableContainer>
       </Box>
     </Container>
