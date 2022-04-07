@@ -9,6 +9,7 @@ import {
   CardContent,
   Typography,
   Box,
+  ButtonGroup,
 } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -40,7 +41,7 @@ export default function FindById(props) {
   return (
     <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
       {/* =====FORM */}
-      <Box>
+      {/* <Box>
         <Link to="/findbyid">
           <Button
             sx={{
@@ -69,7 +70,7 @@ export default function FindById(props) {
             Find Name
           </Button>
         </Link>
-      </Box>
+      </Box> */}
       <Box sx={{ display: "flex", flexDirection: "row" }}>
         <FormControl
           sx={{
@@ -77,19 +78,10 @@ export default function FindById(props) {
             borderRadius: 2,
             p: 2,
             m: 2,
-            height: 170,
-            width: 215,
+            height: "auto",
+            width: "100%",
           }}
         >
-          <Button
-            variant="contained"
-            size="large"
-            color="warning"
-            onClick={log}
-            sx={{ mb: "20px" }}
-          >
-            log
-          </Button>
           <TextField
             onChange={handleChangeId}
             value={changeId}
@@ -99,14 +91,24 @@ export default function FindById(props) {
             variant="outlined"
             sx={{ mb: "20px" }}
           />
-          <Button
-            sx={{}}
-            onClick={handleFindById}
-            variant="contained"
-            size="large"
-          >
-            Find
-          </Button>
+          <ButtonGroup>
+            <Button
+              sx={{}}
+              onClick={handleFindById}
+              variant="contained"
+              size="large"
+            >
+              Find
+            </Button>
+            <Button
+              variant="contained"
+              size="large"
+              color="warning"
+              onClick={log}
+            >
+              log
+            </Button>
+          </ButtonGroup>
         </FormControl>
         {/* =====CARD */}
         {!!charById && (

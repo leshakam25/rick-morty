@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Characters() {
   return (
     <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
-      <Box>
+      {/* <Box>
         <Link to="/findbyid">
           <Button
             sx={{
@@ -35,7 +35,7 @@ function Characters() {
             Find Name
           </Button>
         </Link>
-      </Box>
+      </Box> */}
     </Container>
   );
 }

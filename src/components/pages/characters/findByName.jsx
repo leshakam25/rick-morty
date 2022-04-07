@@ -87,39 +87,16 @@ export default function FindByName() {
       }}
       maxWidth="xl"
     >
-      {/* ======PAGES */}
-      <Box sx={{}}>
-        <Link to="/findbyid">
-          <Button
-            sx={{
-              m: 2,
-              color: "#C7F9CC",
-              bgcolor: "#38A3A5",
-            }}
-            color="secondary"
-            variant="contained"
-            size="large"
-          >
-            Find Id
-          </Button>
-        </Link>
-        <Link to="/findbyname">
-          <Button
-            sx={{
-              m: "2px 2px 2px 0",
-              color: "#C7F9CC",
-              bgcolor: "#38A3A5",
-            }}
-            color="secondary"
-            variant="contained"
-            size="large"
-          >
-            Find Name
-          </Button>
-        </Link>
-      </Box>
       {/* ====RESULTS */}
-      <Box sx={{ display: "flex", flexDirection: "column", flexWrap: "wrap" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         {/* =====FORM */}
 
         <FormControl
@@ -127,9 +104,9 @@ export default function FindByName() {
             bgcolor: "#dcdcdc",
             borderRadius: 2,
             p: 2,
-            m: 2,
             height: "auto",
             width: "95%",
+            my: 2,
           }}
         >
           <TextField
@@ -157,7 +134,7 @@ export default function FindByName() {
         </FormControl>
         {/* =====TABLE */}
         <TableContainer
-          sx={{ m: 2, boxShadow: "none", bgcolor: "#dcdcdc", maxWidth: "97%" }}
+          sx={{ boxShadow: "none", bgcolor: "#dcdcdc", maxWidth: "97%" }}
           align="center"
           component={Paper}
         >
@@ -175,6 +152,7 @@ export default function FindByName() {
                 flexDirection: "row",
                 flexWrap: "wrap",
                 alignItems: "center",
+                justifyContent: "space-between",
               }}
             >
               {!!charByName &&
@@ -185,7 +163,7 @@ export default function FindByName() {
                     id={row.id}
                     onClick={handleOpen}
                     className={s.hover}
-                    sx={{ width: "17vw" }}
+                    sx={{ width: "250px", height: "auto" }}
                   >
                     <TableCell align="left">
                       <CardMedia
@@ -271,7 +249,7 @@ export default function FindByName() {
                 })}
             </Box>
           </Modal>
-          {!!charByName && (
+          {!!charByName && !!charByName.results && (
             <Box sx={{ m: 2 }}>
               <ButtonGroup>
                 <Button
