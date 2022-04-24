@@ -12,7 +12,6 @@ import {
   ButtonGroup,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function FindById(props) {
   const [charById, setCharById] = useState();
@@ -41,45 +40,22 @@ export default function FindById(props) {
   return (
     <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
       {/* =====FORM */}
-      {/* <Box>
-        <Link to="/findbyid">
-          <Button
-            sx={{
-              m: 2,
-              color: "#C7F9CC",
-              bgcolor: "#38A3A5",
-            }}
-            color="secondary"
-            variant="contained"
-            size="large"
-          >
-            Find Id
-          </Button>
-        </Link>
-        <Link to="/findbyname">
-          <Button
-            sx={{
-              m: "2px 2px 2px 0",
-              color: "#C7F9CC",
-              bgcolor: "#38A3A5",
-            }}
-            color="secondary"
-            variant="contained"
-            size="large"
-          >
-            Find Name
-          </Button>
-        </Link>
-      </Box> */}
-      <Box sx={{ display: "flex", flexDirection: "row" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          flexWrap: "wrap",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <FormControl
           sx={{
             bgcolor: "#dcdcdc",
             borderRadius: 2,
             p: 2,
-            m: 2,
-            height: "auto",
-            width: "100%",
+            my: 2,
+            width: "95%",
           }}
         >
           <TextField
@@ -117,39 +93,48 @@ export default function FindById(props) {
             sx={{
               m: 2,
               bgcolor: "#dcdcdc",
-              width: 280,
               minHeight: 380,
               borderRadius: 2,
-              padding: "16px 16px 0 16px",
+              padding: "16px 16px 16px 16px",
               boxShadow: "none",
+              display: "flex",
+              flexDirection: "row",
             }}
           >
-            <Typography variant="h5">
-              {!!charById && !!charById.name && charById.name}
-            </Typography>
             {!!charById && !!charById.image && (
-              <CardMedia
-                component="img"
-                alt="no img"
-                height="auto"
-                image={charById.image}
-                sx={{ height: "350px", borderRadius: 2 }}
-              />
+              <Box>
+                <Typography variant="h3">
+                  {!!charById && !!charById.name && charById.name}
+                </Typography>
+                <CardMedia
+                  component="img"
+                  alt="no img"
+                  image={charById.image}
+                  sx={{ height: "550px", width: "auto", borderRadius: 2 }}
+                />
+              </Box>
             )}
-            <CardContent>
-              <Typography variant="body1" color="text.secondary">
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "left",
+              }}
+            >
+              <Typography variant="h5" color="text.secondary">
                 Alive or not: {charById.status}
               </Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="h5" color="text.secondary">
                 Created: {charById.created}
               </Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="h5" color="text.secondary">
                 Gender: {charById.gender}
               </Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="h5" color="text.secondary">
                 Race: {charById.species}
               </Typography>
-              <Typography variant="body1" color="text.secondary">
+              <Typography variant="h5" color="text.secondary">
                 Location:
                 {charById.location.name}
               </Typography>

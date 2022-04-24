@@ -27,7 +27,6 @@ function RandomCharackter() {
           maxWidth: "300px",
           p: 2,
           borderRadius: 2,
-          float: "left",
         }}
       >
         <Typography variant="h4">Random Character</Typography>

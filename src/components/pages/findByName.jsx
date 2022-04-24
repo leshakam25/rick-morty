@@ -1,5 +1,6 @@
 import * as React from "react";
 import s from "./characters.module.css";
+import { motion } from "framer-motion";
 import {
   TextField,
   FormControl,
@@ -10,7 +11,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
   TableRow,
   Typography,
   Paper,
@@ -21,7 +21,6 @@ import {
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 export default function FindByName() {
   const style = {
@@ -40,16 +39,26 @@ export default function FindByName() {
   const [charByName, setCharByName] = useState({});
   const [nameChange, setNameChange] = useState("");
   const [data, setData] = useState(null);
-
   const [open, setOpen] = React.useState(false);
+
+  const listVariants = {
+    visible: (i) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+      },
+    }),
+    hidden: { opacity: 0, y: -400 },
+  };
+
+  const url = `https://rickandmortyapi.com/api/character/`;
 
   const handleOpen = (event) => {
     setOpen(true);
     setData(event.currentTarget.id);
   };
   const handleClose = () => setOpen(false);
-
-  const url = `https://rickandmortyapi.com/api/character/`;
 
   const handleChangeName = (p) => {
     setNameChange(p.currentTarget.value);
@@ -87,7 +96,6 @@ export default function FindByName() {
       }}
       maxWidth="xl"
     >
-      {/* ====RESULTS */}
       <Box
         sx={{
           display: "flex",
@@ -98,15 +106,13 @@ export default function FindByName() {
         }}
       >
         {/* =====FORM */}
-
         <FormControl
           sx={{
             bgcolor: "#dcdcdc",
             borderRadius: 2,
             p: 2,
-            height: "auto",
-            width: "95%",
             my: 2,
+            width: "95%",
           }}
         >
           <TextField
@@ -157,27 +163,38 @@ export default function FindByName() {
             >
               {!!charByName &&
                 charByName.results &&
-                charByName.results.map((row) => (
-                  <TableRow
+                charByName.results.map((row, i) => (
+                  <motion.div
                     key={row.id}
-                    id={row.id}
-                    onClick={handleOpen}
-                    className={s.hover}
-                    sx={{ width: "250px", height: "auto" }}
+                    variants={listVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={i}
                   >
-                    <TableCell align="left">
-                      <CardMedia
-                        align="left"
-                        component="img"
-                        alt="no img"
-                        image={row.image}
-                        sx={{ height: "auto", width: "120px", borderRadius: 1 }}
-                      />
-                    </TableCell>
-                    <TableCell sx={{ fontSize: "22px" }} align="left">
-                      {row.name}
-                    </TableCell>
-                  </TableRow>
+                    <TableRow
+                      id={row.id}
+                      onClick={handleOpen}
+                      className={s.hover}
+                      sx={{ width: "250px", height: "auto" }}
+                    >
+                      <TableCell align="left">
+                        <CardMedia
+                          align="left"
+                          component="img"
+                          alt="no img"
+                          image={row.image}
+                          sx={{
+                            height: "auto",
+                            width: "120px",
+                            borderRadius: 1,
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell sx={{ fontSize: "22px" }} align="left">
+                        {row.name}
+                      </TableCell>
+                    </TableRow>
+                  </motion.div>
                 ))}
             </TableBody>
           </Table>

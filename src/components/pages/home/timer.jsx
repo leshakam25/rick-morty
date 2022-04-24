@@ -2,7 +2,7 @@ import { Typography, Box } from "@mui/material";
 import React from "react";
 import Countdown from "react-countdown";
 
-export default function Timer(props) {
+export default function Timer() {
   const date = "2022-07-26T00:00:00";
 
   const Completionist = () => (
