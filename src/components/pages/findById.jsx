@@ -1,4 +1,3 @@
-import s from "./characters.module.css";
 import {
   TextField,
   FormControl,
@@ -38,7 +37,7 @@ export default function FindById(props) {
   };
 
   return (
-    <Container sx={{ borderRadius: 2, bgcolor: "#57CC99" }} maxWidth="xl">
+    <Container sx={{ borderRadius: 2 }} maxWidth="xl">
       {/* =====FORM */}
       <Box
         sx={{

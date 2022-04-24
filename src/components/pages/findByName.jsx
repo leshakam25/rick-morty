@@ -1,5 +1,5 @@
 import * as React from "react";
-import s from "./characters.module.css";
+import s from "./pages.module.css";
 import { motion } from "framer-motion";
 import {
   TextField,
@@ -7,16 +7,13 @@ import {
   Button,
   ButtonGroup,
   Container,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
   Typography,
-  Paper,
   Box,
   CardMedia,
   Modal,
+  Card,
+  CardActionArea,
+  CardContent,
 } from "@mui/material";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
@@ -92,7 +89,6 @@ export default function FindByName() {
     <Container
       sx={{
         borderRadius: 2,
-        bgcolor: "#57CC99",
       }}
       maxWidth="xl"
     >
@@ -124,7 +120,14 @@ export default function FindByName() {
             variant="outlined"
             sx={{ mb: "20px" }}
           />
-          <ButtonGroup>
+          <ButtonGroup
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "left",
+              alignItems: "center",
+            }}
+          >
             <Button onClick={handleFindByName} variant="contained" size="large">
               Find
             </Button>
@@ -136,139 +139,8 @@ export default function FindByName() {
             >
               log
             </Button>
-          </ButtonGroup>
-        </FormControl>
-        {/* =====TABLE */}
-        <TableContainer
-          sx={{ boxShadow: "none", bgcolor: "#dcdcdc", maxWidth: "97%" }}
-          align="center"
-          component={Paper}
-        >
-          <Table
-            sx={{
-              minWidth: 650,
-              display: "flex",
-              flexDirection: "row",
-            }}
-            aria-label="simple table"
-          >
-            <TableBody
-              sx={{
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              {!!charByName &&
-                charByName.results &&
-                charByName.results.map((row, i) => (
-                  <motion.div
-                    key={row.id}
-                    variants={listVariants}
-                    initial="hidden"
-                    animate="visible"
-                    custom={i}
-                  >
-                    <TableRow
-                      id={row.id}
-                      onClick={handleOpen}
-                      className={s.hover}
-                      sx={{ width: "250px", height: "auto" }}
-                    >
-                      <TableCell align="left">
-                        <CardMedia
-                          align="left"
-                          component="img"
-                          alt="no img"
-                          image={row.image}
-                          sx={{
-                            height: "auto",
-                            width: "120px",
-                            borderRadius: 1,
-                          }}
-                        />
-                      </TableCell>
-                      <TableCell sx={{ fontSize: "22px" }} align="left">
-                        {row.name}
-                      </TableCell>
-                    </TableRow>
-                  </motion.div>
-                ))}
-            </TableBody>
-          </Table>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              {!!charByName &&
-                !!charByName.results &&
-                charByName.results.map((element) => {
-                  if (element.id === +data) {
-                    return (
-                      <Box
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        <CardMedia
-                          align="left"
-                          component="img"
-                          alt="no img"
-                          image={element.image}
-                          sx={{
-                            height: "50vh",
-                            width: "auto",
-                            borderRadius: 1,
-                          }}
-                        />
-                        <Box
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "space-around",
-                            alignItems: "left",
-                            wrap: "wrap",
-                            m: 2,
-                            fontSize: "32px",
-                          }}
-                        >
-                          <Typography variant="h2">
-                            Name: {element.name}
-                          </Typography>
-                          <Typography variant="h3">
-                            Gender: {element.gender}
-                          </Typography>
-                          <Typography variant="h3">
-                            Alive or not: {element.status}
-                          </Typography>
-                          <Typography variant="h3">
-                            Location:
-                            {element.location.name}
-                          </Typography>
-                          <Typography variant="h3">
-                            {element.created}
-                          </Typography>
-                          <Typography variant="h3">
-                            Episode: {element.episode[0]}
-                          </Typography>
-                          <Typography variant="h3">ID: {element.id}</Typography>
-                        </Box>
-                      </Box>
-                    );
-                  }
-                })}
-            </Box>
-          </Modal>
-          {!!charByName && !!charByName.results && (
-            <Box sx={{ m: 2 }}>
-              <ButtonGroup>
+            {!!charByName && !!charByName.results && (
+              <Box sx={{ m: 0 }}>
                 <Button
                   color="secondary"
                   onClick={prevPage}
@@ -286,10 +158,125 @@ export default function FindByName() {
                 >
                   <ArrowForwardRoundedIcon />
                 </Button>
-              </ButtonGroup>
-            </Box>
-          )}
-        </TableContainer>
+              </Box>
+            )}
+            {!!charByName && charByName.info && (
+              <Typography sx={{ m: 1 }} variant="body1">
+                Results: {charByName.info.count}
+              </Typography>
+            )}
+          </ButtonGroup>
+        </FormControl>
+        {/* =====TABLE */}
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          {" "}
+          {!!charByName &&
+            charByName.results &&
+            charByName.results.map((row, i) => (
+              <motion.div
+                variants={listVariants}
+                initial="hidden"
+                animate="visible"
+                custom={i}
+              >
+                <Card
+                  id={row.id}
+                  onClick={handleOpen}
+                  className={s.hover}
+                  sx={{ width: "280px", height: "auto", m: 1 }}
+                >
+                  <CardActionArea sx={{ minHeight: 250 }}>
+                    <CardMedia
+                      component="img"
+                      height="180"
+                      image={row.image}
+                      alt="green iguana"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {row.name}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </motion.div>
+            ))}
+        </Box>
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            {!!charByName &&
+              !!charByName.results &&
+              charByName.results.map((element) => {
+                if (element.id === +data) {
+                  return (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <CardMedia
+                        align="left"
+                        component="img"
+                        alt="no img"
+                        image={element.image}
+                        sx={{
+                          height: "50vh",
+                          width: "auto",
+                          borderRadius: 1,
+                        }}
+                      />
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-around",
+                          alignItems: "left",
+                          wrap: "wrap",
+                          m: 2,
+                          fontSize: "32px",
+                        }}
+                      >
+                        <Typography variant="h2">
+                          Name: {element.name}
+                        </Typography>
+                        <Typography variant="h3">
+                          Gender: {element.gender}
+                        </Typography>
+                        <Typography variant="h3">
+                          Alive or not: {element.status}
+                        </Typography>
+                        <Typography variant="h3">
+                          Location:
+                          {element.location.name}
+                        </Typography>
+                        <Typography variant="h3">{element.created}</Typography>
+                        <Typography variant="h3">
+                          Episode: {element.episode[0]}
+                        </Typography>
+                        <Typography variant="h3">ID: {element.id}</Typography>
+                      </Box>
+                    </Box>
+                  );
+                }
+              })}
+          </Box>
+        </Modal>
       </Box>
     </Container>
   );
