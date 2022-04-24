@@ -73,12 +73,13 @@ function Home(props) {
               unspecified number of seasons.[2]
             </Typography>
             <motion.div
-              animate={{ rotate: 5 }}
+              initial={{ rotate: -15 }}
+              animate={{ rotate: 15 }}
               transition={{
                 duration: 1,
                 repeat: Infinity,
                 repeatType: "reverse",
-                type: "tween",
+                type: "spring",
                 ease: "easeInOut",
               }}
             >
