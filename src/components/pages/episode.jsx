@@ -1,6 +1,5 @@
-import s from "./episode.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
-import CucumberRick from "../../../img/cucumberRick.jpg";
+import CucumberRick from "../../img/cucumberRick.jpg";
 
 function Episode() {
   return (

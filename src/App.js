@@ -3,8 +3,8 @@ import "./App.css";
 
 import ResponsiveAppBar from "./components/appBar";
 import { Route, Routes } from "react-router-dom";
-import Location from "./components/pages/location/location";
-import Episode from "./components/pages/episode/episode";
+import Location from "./components/pages/location";
+import Episode from "./components/pages/episode";
 import FindByName from "./components/pages/findByName";
 import FindById from "./components/pages/findById";
 import Home from "./components/pages/home/home";

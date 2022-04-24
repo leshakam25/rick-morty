@@ -1,6 +1,5 @@
-import s from "./location.module.css";
 import { Box, CardMedia, Container, Typography } from "@mui/material";
-import CucumberRick from "../../../img/cucumberRick.jpg";
+import CucumberRick from "../../img/cucumberRick.jpg";
 
 function Location() {
   return (

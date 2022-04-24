@@ -24,16 +24,20 @@ function RandomCharackter() {
       <Box
         sx={{
           bgcolor: "#38a3a5",
-          maxWidth: "300px",
+          width: "300px",
+          height: "300px",
           p: 2,
-          borderRadius: 2,
+          borderRadius: "50%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        <Typography variant="h4">Random Character</Typography>
         <CardMedia
           component="img"
           image={charackter.image}
-          sx={{ maxWidth: 300, height: "auto" }}
+          sx={{ width: 250, height: "auto", borderRadius: "50%" }}
         />
         <Typography variant="body1">Name: {charackter.name}</Typography>
         <Typography variant="body1">Race: {charackter.species}</Typography>
