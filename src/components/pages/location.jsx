@@ -9,7 +9,11 @@ import {
   CardContent,
   Typography,
   Box,
+  CardMedia,
+  Modal,
 } from "@mui/material";
+import * as React from "react";
+
 import s from "./pages.module.css";
 
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
@@ -18,8 +22,23 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 
 function Location() {
+  const [data, setData] = useState(null);
+  const [open, setOpen] = React.useState(false);
   const [changeLocation, setChangeLocation] = useState("");
   const [location, setLocation] = useState({});
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    width: "90vw",
+    height: "80vh",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: 2,
+  };
 
   const url = "https://rickandmortyapi.com/api/location";
 
@@ -37,6 +56,12 @@ function Location() {
     }),
     hidden: { opacity: 0, y: -400 },
   };
+
+  const handleOpen = (event) => {
+    setOpen(true);
+    setData(event.currentTarget.id);
+  };
+  const handleClose = () => setOpen(false);
 
   const handleFindByLocation = async () => {
     const urlName = url + "?name=" + changeLocation;
@@ -162,7 +187,7 @@ function Location() {
                   className={s.hover}
                   sx={{ width: 280, m: 1 }}
                 >
-                  <CardActionArea sx={{ height: 180 }}>
+                  <CardActionArea onClick={handleOpen} sx={{ height: 180 }}>
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
                         {row.name}
@@ -182,6 +207,54 @@ function Location() {
               </motion.div>
             ))}
         </Box>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            {!!location &&
+              !!location.results &&
+              location.results.map((element) => {
+                if (element.id === +data) {
+                  return (
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "row",
+                        flexWrap: "wrap",
+                      }}
+                    >
+                      <Box
+                        sx={{
+                          display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "space-around",
+                          alignItems: "left",
+                          wrap: "wrap",
+                          m: 2,
+                          fontSize: "32px",
+                        }}
+                      >
+                        <Typography variant="h2">
+                          Name: {element.name}
+                        </Typography>
+
+                        <Typography variant="h3">
+                          type: {element.type}
+                        </Typography>
+                        <Typography variant="h3">
+                          dimension: {element.dimension}
+                        </Typography>
+                        <Typography variant="h3">ID: {element.id}</Typography>
+                      </Box>
+                    </Box>
+                  );
+                }
+              })}
+          </Box>
+        </Modal>
       </Box>
     </Container>
   );
